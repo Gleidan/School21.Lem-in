@@ -1,3 +1,6 @@
 [submodule "School_21.Libft"]
 	path = School_21.Libft
 	url = git@github.com:Gleidan/School_21.Libft.git
+[submodule "libft"]
+	path = libft
+	url = git@github.com:Gleidan/School_21.Libft.git
