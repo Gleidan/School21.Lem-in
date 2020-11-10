@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 10:45:23 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 17:16:05 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/10 20:05:33 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ static void count_steps(t_lem *lem, t_sol *sol)
 	extend_ants(lem, sol, max_len);
 }
 
+/*
+**	The found paths are suitable
+**	as long as the number of steps
+**	of the found path is less than
+**	the previous one.
+*/
+
 static int compare_solutions(t_lem *lem)
 {
 	t_sol *s_tmp;
@@ -91,6 +98,13 @@ static int compare_solutions(t_lem *lem)
 		return (0);
 	}
 }
+
+/*
+**	While we can create optimized paths
+**	we get the path thanks to the bs_algo,
+**	then we get shortest way and exclude
+**	intersections
+*/
 
 int		finding_paths(t_lem *lem)
 {
