@@ -6,11 +6,17 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:17:40 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/02 19:31:41 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/10 12:32:21 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+/*
+**	The hash table is created in size (nb_rooms * 4).
+**	Write down all rooms by their hash key position.
+**	If we have collision - record in (same_hash) variable.
+*/
 
 static void	create_hash_table(t_lem *lem)
 {
@@ -44,6 +50,8 @@ static void init_link(t_link *link, char *link_name)
 {
 	link->name = ft_strdup(link_name);
 	link->weight = 1;
+	link->on = 1;
+	link->in_way = 0;
 	link->next = NULL;
 } 
 
@@ -93,6 +101,12 @@ static int add_link(t_lem *lem, char *room, char *room_link)
 	find_room->link_count++;
 	return (1);
 }
+
+/*
+**	Split line into 2 parts, because
+**	link looks like this (room1-room2).
+**	Creating hash_table in (rooms) variable.
+*/
 
 int	save_links(t_lem *lem, char *line)
 {

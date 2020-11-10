@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:27:32 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/02 19:26:45 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/10 17:11:54 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,29 @@
 
 static void save_map(t_lem *lem, char *line)
 {
-	char *tmp;
-
+//	char *tmp;
+	t_map *tmp_map;
+	t_map *add_line;
+	
+	if (!lem->map)
+	{
+		tmp_map = (t_map*)malloc(sizeof(t_map));
+		tmp_map->content = ft_strdup(line);
+		tmp_map->next = NULL;
+		lem->map = tmp_map;
+	}
+	else
+	{
+		tmp_map = lem->map;
+		while (tmp_map->next)
+			tmp_map = tmp_map->next;
+		add_line = (t_map*)malloc(sizeof(t_map));
+		add_line->content = ft_strdup(line);
+		add_line->next = NULL;
+		tmp_map->next = add_line;
+	}
+	
+/*
 	if (!lem->map)
 	{
 		if (!(lem->map = ft_strdup(line)))
@@ -23,7 +44,7 @@ static void save_map(t_lem *lem, char *line)
 			ft_strdel(&line);
 			end_with_error(lem, 2, NULL);
 		}
-	}
+	}	
 	else
 	{
 		tmp = lem->map;
@@ -34,7 +55,7 @@ static void save_map(t_lem *lem, char *line)
 		}
 		free(tmp);
 	}
-	
+	*/
 }
 
 /*
@@ -114,7 +135,10 @@ int	parsing(t_lem *lem)
 
 	point.start = 0;
 	point.end = 0;
-	while ((gnl = get_next_line(0, &line)) > 0)
+
+	int fd = open("big_fucking_map.map", O_RDONLY);
+
+	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
 		parsing_map(lem, line, &point);
 		ft_strdel(&line);
@@ -124,8 +148,8 @@ int	parsing(t_lem *lem)
 	free(line);
 	if (!lem->begin_room || !lem->start || !lem->end || !lem->start->begin_link || !lem->end->begin_link)
 		end_with_error(lem, 2, NULL);
-	line = lem->map;
-	lem->map = ft_strjoin(lem->map, "\n");
+//	line = lem->map;
+//	lem->map = ft_strjoin(lem->map, "\n");
 	free(line);
 	return (1);
 }

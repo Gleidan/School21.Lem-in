@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:52:30 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/02 19:31:48 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/10 12:27:38 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,18 @@ static void init_room(t_room *room_lst, char **room)
 	room_lst->prev = NULL;
 	room_lst->same_hash = NULL;
 	room_lst->room_copy = NULL;
+	room_lst->queue = NULL;
 	room_lst->link_count = 0;
+	room_lst->in_queue = 0;
+	room_lst->bellman_ford = 0;
 }
+
+/*
+**	Record room on structure in (begin_room)
+**	variable as is it presented in the map.
+**	If we have (start) or (end) point,
+**	we also write to the (start) of (end).
+*/
 
 static void	record_room(t_lem *lem, char **room, t_coord *point)
 {
@@ -86,6 +96,12 @@ static int	check_room(char **room)
 	return (1);
 }
 
+/*
+**	Split the line into 3 parts, because
+**	room looks like this (name x y).
+**	Checking the room for validity and repeats.
+*/
+
 int			save_room(t_lem *lem, char *line, t_coord *point)
 {
 	char **split_line;
@@ -95,7 +111,7 @@ int			save_room(t_lem *lem, char *line, t_coord *point)
 	if (!(split_line = ft_strsplit(line, ' ')))
 		return (0);
 	if (!check_room(split_line) || check_repeats(lem->begin_room, split_line))
-		end_with_error(lem, 1, split_line);
+		end_with_error(lem, 2, split_line);
 	record_room(lem, split_line, point);
 	lem->nb_rooms++;
 	ft_clear_table(split_line);

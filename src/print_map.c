@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hash.c                                             :+:      :+:    :+:   */
+/*   print_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 14:25:32 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 10:40:22 by jconcent         ###   ########.fr       */
+/*   Created: 2020/11/10 17:14:36 by jconcent          #+#    #+#             */
+/*   Updated: 2020/11/10 17:15:14 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-/*
-**	Create unique hash key.
-**	For example: name - "lem"
-**	key - 30;
-*/
-
-int hash(int size, char *name)
+void	print_map(t_lem *lem)
 {
-	int i;
-	int key;
+	t_map *tmp;
 
-	i = 0;
-	key = 0;
-	while (name[i])
+	tmp = lem->map;
+	while (tmp)
 	{
-		key += name[i];
-		i++;
+		ft_printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
-	key = key % (size * 4);
-	return (key);
 }
