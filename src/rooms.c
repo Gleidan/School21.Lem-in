@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:52:30 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 12:27:38 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:37:54 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	record_room(t_lem *lem, char **room, t_coord *point)
 	if (!lem->begin_room)
 	{
 		if (!(lem->begin_room = (t_room*)malloc(sizeof(t_room))))
-			end_with_error(lem, 0, room);
+			end_with_error(lem);
 		room_lst = lem->begin_room;
 	}
 	else
@@ -49,7 +49,7 @@ static void	record_room(t_lem *lem, char **room, t_coord *point)
 		while (room_lst->next)
 			room_lst = room_lst->next;
 		if (!(room_lst->next = (t_room *)malloc(sizeof(t_room))))
-			end_with_error(lem, 1, room);
+			end_with_error(lem);
 		room_lst = room_lst->next;
 	}
 	init_room(room_lst, room);
@@ -107,11 +107,11 @@ int			save_room(t_lem *lem, char *line, t_coord *point)
 	char **split_line;
 
 	if (lem->rooms)
-		end_with_error(lem, 1, NULL);
+		end_with_error(lem);
 	if (!(split_line = ft_strsplit(line, ' ')))
 		return (0);
 	if (!check_room(split_line) || check_repeats(lem->begin_room, split_line))
-		end_with_error(lem, 2, split_line);
+		end_with_error(lem);
 	record_room(lem, split_line, point);
 	lem->nb_rooms++;
 	ft_clear_table(split_line);

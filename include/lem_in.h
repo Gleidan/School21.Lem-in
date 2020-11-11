@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 10:27:22 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 17:25:02 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:31:05 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct	s_lem
 	t_sol	*solutions;
 }				t_lem;
 
-void			end_with_error(t_lem *lem, int error, char **arr);
+void			end_with_error(t_lem *lem);
 int				save_room(t_lem *lem, char *line, t_coord *point);
 int				save_links(t_lem *lem, char *line);
 int				hash(int size, char *name);
@@ -112,5 +112,10 @@ t_link		*copy_links(t_lem *lem, t_link *copy_link, t_link *original_link);
 void	init_sol(t_sol *solutions);
 void	print_map(t_lem *lem);
 void	run_ants(t_lem *lem, t_way *w, int i);
+void			free_room_list(t_room **rooms);
+void			free_links(t_link *links);
+void			free_solutions(t_sol *sol);
+void free_map(t_map *map);
+void free_lem(t_lem *lem);
 
 #endif

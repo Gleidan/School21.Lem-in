@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:17:40 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 12:32:21 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:37:22 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	create_hash_table(t_lem *lem)
 	hash_key = -1;
 	tmp = lem->begin_room;
 	if (!(lem->rooms = (t_room**)malloc(sizeof(t_room*) * (lem->nb_rooms * 4))))
-		end_with_error(lem, 1, NULL);
+		end_with_error(lem);
 	while (hash_key < lem->nb_rooms * 4 - 1)
 		lem->rooms[++hash_key] = NULL;
 	while (tmp)
@@ -62,7 +62,7 @@ static int create_new_link(t_lem *lem, t_room *find_room, char *room_link)
 	if (!find_room->begin_link)
 	{
 		if (!(find_room->begin_link = (t_link*)malloc(sizeof(t_link))))
-			end_with_error(lem, 1, NULL);
+			end_with_error(lem);
 		link_list = find_room->begin_link;
 	}
 	else
@@ -77,7 +77,7 @@ static int create_new_link(t_lem *lem, t_room *find_room, char *room_link)
 		if (ft_strcmp(link_list->name, room_link) == 0)
 			return (0);
 		if (!(link_list->next = (t_link*)malloc(sizeof(t_link))))
-			end_with_error(lem, 1, NULL);
+			end_with_error(lem);
 		link_list = link_list->next;
 	}
 	init_link(link_list, room_link);
@@ -113,9 +113,9 @@ int	save_links(t_lem *lem, char *line)
 	char **split_line;
 
 	if (!(split_line = ft_strsplit(line, '-')))
-		end_with_error(lem, 2, NULL);
+		end_with_error(lem);
 	if (ft_strchr(split_line[0], ' ') || ft_strchr(split_line[1], ' ') || !lem->begin_room)
-		end_with_error(lem, 2, NULL);
+		end_with_error(lem);
 	if (!lem->rooms)
 		create_hash_table(lem);
 	if (!(add_link(lem, split_line[0], split_line[1])))

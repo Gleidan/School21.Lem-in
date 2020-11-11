@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 13:53:39 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 16:36:24 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:39:40 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void new_path(t_lem *lem, t_way *current_way, t_path *tmp_path)
 
 	while (ft_strcmp(tmp_path->name, lem->start->name) != 0)
 	{
-		tmp_path->forward = (t_path*)malloc(sizeof(t_path));
+		if (!(tmp_path->forward = (t_path*)malloc(sizeof(t_path))))
+			end_with_error(lem);
 		tmp_path->forward->ant_name = 0;
 		back = tmp_path;
 		tmp_path = tmp_path->forward;
@@ -64,7 +65,7 @@ t_way *new_way(t_lem *lem)
 	t_way *tmp_way;
 
 	if (!(tmp_way = (t_way*)malloc(sizeof(t_way))) || !(tmp_way->path = (t_path*)malloc(sizeof(t_path))))
-		end_with_error(lem, 2, NULL);
+		end_with_error(lem);
 	tmp_way->path->name = ft_strdup(lem->end->name);
 	tmp_way->path->backward = NULL;
 	tmp_way->path->forward = NULL;
@@ -95,7 +96,8 @@ void	short_way(t_lem *lem)
 	
 	if (!lem->solutions)
 	{
-		lem->solutions = (t_sol*)malloc(sizeof(t_sol));
+		if (!(lem->solutions = (t_sol*)malloc(sizeof(t_sol))))
+			end_with_error(lem);
 		init_sol(lem->solutions);
 		way = new_way(lem);
 		new_path(lem, way, way->path);
@@ -105,7 +107,8 @@ void	short_way(t_lem *lem)
 	}
 	else
 	{
-		new_sol = (t_sol*)malloc(sizeof(t_sol));
+		if (!(new_sol = (t_sol*)malloc(sizeof(t_sol))))
+			end_with_error(lem);
 		init_sol(new_sol);
 		new_sol->next = lem->solutions;
 		lem->solutions = new_sol;

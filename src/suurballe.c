@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 15:44:30 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 15:51:04 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:39:04 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void out_links(t_lem *lem, char *name)
 		find_room = find_room->same_hash;
 	find_room->room_copy = copy_room(lem, find_room);
 	ptr = find_room->begin_link;
-	find_room->room_copy->begin_link = (t_link *)malloc(sizeof(t_link));
+	if (!(find_room->room_copy->begin_link = (t_link *)malloc(sizeof(t_link))))
+		end_with_error(lem);
 	find_room->room_copy->begin_link->name = ft_strdup(find_room->name);
 	find_room->room_copy->begin_link->weight = 0;
 	find_room->room_copy->begin_link->next = NULL;

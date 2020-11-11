@@ -1,2 +1,0 @@
-Двоичный файл lem-in совпадает
-src/parsing.c:	int fd = open("big_test.map", O_RDONLY);

@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 10:45:23 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 20:05:33 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:36:08 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int		finding_paths(t_lem *lem)
 		count_steps(lem, lem->solutions);
 	}
 	if (!lem->solutions)
-		end_with_error(lem, 1, NULL);
+		end_with_error(lem);
 	print_map(lem);
 	run_ants(lem, lem->solutions->ways, 0);
 	return (0);

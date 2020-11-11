@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 14:42:31 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 16:37:52 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:35:49 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int make_paths(t_lem *lem, t_path **new_path, t_link **next_room)
 {
 	t_room *find_room;
 
-	(*new_path)->forward = (t_path*)malloc(sizeof(t_path));
+	if (!((*new_path)->forward = (t_path*)malloc(sizeof(t_path))))
+		end_with_error(lem);
 	(*new_path)->forward->backward = (*new_path);
 	(*new_path) = (*new_path)->forward;
 	(*new_path)->ant_name = 0;

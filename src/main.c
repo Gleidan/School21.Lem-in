@@ -6,11 +6,25 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 10:34:43 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 17:15:01 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:31:41 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void free_lem(t_lem *lem)
+{
+	if (lem)
+		if (lem->map)
+			free_map(lem->map);
+	if (lem->begin_room)
+		free_room_list(&lem->begin_room);
+	if (lem->rooms)
+		free(lem->rooms);
+	if (lem->solutions)
+		free_solutions(lem->solutions);
+	free(lem);
+}
 
 /*
 **	Two main parts of program:
@@ -24,11 +38,12 @@ int	main(void)
 	t_lem *lem;
 
 	if (!(lem = (t_lem*)malloc(sizeof(t_lem))))
-		end_with_error(lem, 1, NULL);
+		end_with_error(lem);
 	ft_bzero(lem, sizeof(lem));
 	if (!parsing(lem))
-		end_with_error(lem, 1, NULL);
+		end_with_error(lem);
 	finding_paths(lem);
+	free_lem(lem);
 
 //	ft_printf("%s\n", lem->map);
 //	ft_printf("ants %d rooms %d\n", lem->nb_ants, lem->nb_rooms);

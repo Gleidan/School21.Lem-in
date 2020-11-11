@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:27:32 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 17:11:54 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:46:29 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static void save_map(t_lem *lem, char *line)
 {
-//	char *tmp;
 	t_map *tmp_map;
 	t_map *add_line;
 	
 	if (!lem->map)
 	{
-		tmp_map = (t_map*)malloc(sizeof(t_map));
+		if (!(tmp_map = (t_map*)malloc(sizeof(t_map))))
+			end_with_error(lem);
 		tmp_map->content = ft_strdup(line);
 		tmp_map->next = NULL;
 		lem->map = tmp_map;
@@ -30,32 +30,12 @@ static void save_map(t_lem *lem, char *line)
 		tmp_map = lem->map;
 		while (tmp_map->next)
 			tmp_map = tmp_map->next;
-		add_line = (t_map*)malloc(sizeof(t_map));
+		if (!(add_line = (t_map*)malloc(sizeof(t_map))))
+			end_with_error(lem);
 		add_line->content = ft_strdup(line);
 		add_line->next = NULL;
 		tmp_map->next = add_line;
 	}
-	
-/*
-	if (!lem->map)
-	{
-		if (!(lem->map = ft_strdup(line)))
-		{
-			ft_strdel(&line);
-			end_with_error(lem, 2, NULL);
-		}
-	}	
-	else
-	{
-		tmp = lem->map;
-		if (!(lem->map = ft_strnjoin(lem->map, line)))
-		{
-			free(tmp);
-			end_with_error(lem, 0, NULL);
-		}
-		free(tmp);
-	}
-	*/
 }
 
 /*
@@ -95,6 +75,8 @@ static int check_ants(t_lem *lem, char *line)
 		++i;
 	}
 	lem->nb_ants = ft_atoi(line);
+	if (!lem->nb_ants)
+		end_with_error(lem);
 	return (1);
 }
 
@@ -120,7 +102,7 @@ static void parsing_map(t_lem *lem, char *line, t_coord *point)
 		rt = save_links(lem, line);
 	save_map(lem, line);
 	if (!rt)
-		end_with_error(lem, 2, NULL);
+		end_with_error(lem);
 }
 
 /*
@@ -129,27 +111,22 @@ static void parsing_map(t_lem *lem, char *line, t_coord *point)
 
 int	parsing(t_lem *lem)
 {
-	int gnl;
-	char *line;
-	t_coord point;
+	int		gnl;
+	char	*line;
+	t_coord	point;
 
 	point.start = 0;
 	point.end = 0;
-
-	int fd = open("big_fucking_map.map", O_RDONLY);
-
-	while ((gnl = get_next_line(fd, &line)) > 0)
+	while ((gnl = get_next_line(0, &line)) > 0)
 	{
 		parsing_map(lem, line, &point);
 		ft_strdel(&line);
 	}
 	if (gnl < 0)
-		end_with_error(lem, 2, NULL);
+		end_with_error(lem);
 	free(line);
 	if (!lem->begin_room || !lem->start || !lem->end || !lem->start->begin_link || !lem->end->begin_link)
-		end_with_error(lem, 2, NULL);
-//	line = lem->map;
-//	lem->map = ft_strjoin(lem->map, "\n");
+		end_with_error(lem);
 	free(line);
 	return (1);
 }

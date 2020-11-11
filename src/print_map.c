@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 17:14:36 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 17:15:14 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:37:19 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	print_map(t_lem *lem)
 		ft_printf("%s\n", tmp->content);
 		tmp = tmp->next;
 	}
+	ft_printf("\n");
 }
