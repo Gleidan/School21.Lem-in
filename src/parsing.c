@@ -6,17 +6,17 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:27:32 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:46:29 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 20:28:58 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void save_map(t_lem *lem, char *line)
+static void			save_map(t_lem *lem, char *line)
 {
 	t_map *tmp_map;
 	t_map *add_line;
-	
+
 	if (!lem->map)
 	{
 		if (!(tmp_map = (t_map*)malloc(sizeof(t_map))))
@@ -44,7 +44,7 @@ static void save_map(t_lem *lem, char *line)
 **	on room in start variables or end in general structure
 */
 
-static int save_point(t_lem *lem, char *line, t_coord *point)
+static int			save_point(t_lem *lem, char *line, t_coord *point)
 {
 	if (point->start == 1 || point->end == 1)
 		return (0);
@@ -63,14 +63,15 @@ static int save_point(t_lem *lem, char *line, t_coord *point)
 	return (1);
 }
 
-static int check_ants(t_lem *lem, char *line)
+static int			check_ants(t_lem *lem, char *line)
 {
 	int i;
 
 	i = 0;
 	while (line[i])
 	{
-		if (!ft_isdigit(line[i]) || (i == 0 && line[i] == 48) || !ft_isint(line))
+		if (!ft_isdigit(line[i]) || (i == 0 && line[i] == 48) ||
+			!ft_isint(line))
 			return (0);
 		++i;
 	}
@@ -82,12 +83,12 @@ static int check_ants(t_lem *lem, char *line)
 
 /*
 **	At the first entry into the function
-**	we write down the number of ants. 
+**	we write down the number of ants.
 **	Then we check for the presence of comment,
 **	room or link signs in the line.
 */
 
-static void parsing_map(t_lem *lem, char *line, t_coord *point)
+static void			parsing_map(t_lem *lem, char *line, t_coord *point)
 {
 	int rt;
 
@@ -109,11 +110,11 @@ static void parsing_map(t_lem *lem, char *line, t_coord *point)
 **	Read map with GNL and fill general structure
 */
 
-int	parsing(t_lem *lem)
+int					parsing(t_lem *lem)
 {
-	int		gnl;
-	char	*line;
-	t_coord	point;
+	int			gnl;
+	char		*line;
+	t_coord		point;
 
 	point.start = 0;
 	point.end = 0;
@@ -125,7 +126,8 @@ int	parsing(t_lem *lem)
 	if (gnl < 0)
 		end_with_error(lem);
 	free(line);
-	if (!lem->begin_room || !lem->start || !lem->end || !lem->start->begin_link || !lem->end->begin_link)
+	if (!lem->begin_room || !lem->start || !lem->end || !lem->start->begin_link
+		|| !lem->end->begin_link)
 		end_with_error(lem);
 	free(line);
 	return (1);

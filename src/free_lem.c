@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 09:22:35 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 09:40:28 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/12 11:00:02 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	free_way(t_way *tmp_way, t_path *tmp_path)
 {
-	t_path *p_ptr;
+	t_path	*p_ptr;
 
 	p_ptr = tmp_path;
 	while (tmp_path)
 	{
-		p_ptr = tmp_path->forward;
+		p_ptr = tmp_path->f;
 		free(tmp_path->name);
 		free(tmp_path);
 		tmp_path = p_ptr;
@@ -27,12 +27,12 @@ void	free_way(t_way *tmp_way, t_path *tmp_path)
 	free(tmp_way);
 }
 
-void			free_solutions(t_sol *sol)
+void	free_solutions(t_sol *sol)
 {
 	t_sol	*sol_tmp;
 	t_sol	*s_ptr;
-	t_way		*way_tmp;
-	t_way		*w_ptr;
+	t_way	*way_tmp;
+	t_way	*w_ptr;
 
 	sol_tmp = sol;
 	while (sol_tmp)
@@ -50,9 +50,9 @@ void			free_solutions(t_sol *sol)
 	}
 }
 
-void			free_links(t_link *links)
+void	free_links(t_link *links)
 {
-	t_link *l_ptr;
+	t_link	*l_ptr;
 
 	while (links)
 	{
@@ -63,9 +63,9 @@ void			free_links(t_link *links)
 	}
 }
 
-void			free_room_list(t_room **rooms)
+void	free_room_list(t_room **rooms)
 {
-	t_room		*tmp;
+	t_room	*tmp;
 
 	while (*rooms)
 	{
@@ -83,9 +83,9 @@ void			free_room_list(t_room **rooms)
 	}
 }
 
-void free_map(t_map *map)
+void	free_map(t_map *map)
 {
-	t_map *tmp;
+	t_map	*tmp;
 
 	while (map)
 	{

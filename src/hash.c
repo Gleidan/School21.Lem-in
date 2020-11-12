@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:25:32 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 10:40:22 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 14:01:38 by Gimad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 **	key - 30;
 */
 
-int hash(int size, char *name)
+int		hash(int size, char *name)
 {
 	int i;
 	int key;

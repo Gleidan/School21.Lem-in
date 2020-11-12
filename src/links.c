@@ -6,7 +6,7 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 14:17:40 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:37:22 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 20:39:17 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 **	If we have collision - record in (same_hash) variable.
 */
 
-static void	create_hash_table(t_lem *lem)
+static void		create_hash_table(t_lem *lem)
 {
-	int hash_key;
-	t_room *tmp;
-	t_room *find_last_room;
+	int		hash_key;
+	t_room	*tmp;
+	t_room	*find_last_room;
 
 	hash_key = -1;
 	tmp = lem->begin_room;
@@ -46,16 +46,16 @@ static void	create_hash_table(t_lem *lem)
 	}
 }
 
-static void init_link(t_link *link, char *link_name)
+static void		init_link(t_link *link, char *link_name)
 {
 	link->name = ft_strdup(link_name);
 	link->weight = 1;
 	link->on = 1;
 	link->in_way = 0;
 	link->next = NULL;
-} 
+}
 
-static int create_new_link(t_lem *lem, t_room *find_room, char *room_link)
+static int		create_new_link(t_lem *lem, t_room *find_room, char *room_link)
 {
 	t_link *link_list;
 
@@ -82,13 +82,12 @@ static int create_new_link(t_lem *lem, t_room *find_room, char *room_link)
 	}
 	init_link(link_list, room_link);
 	return (1);
-	
 }
 
-static int add_link(t_lem *lem, char *room, char *room_link)
+static int		add_link(t_lem *lem, char *room, char *room_link)
 {
-	int hash_key;
-	t_room *find_room;
+	int		hash_key;
+	t_room	*find_room;
 
 	hash_key = hash(lem->nb_rooms, room);
 	find_room = lem->rooms[hash_key];
@@ -108,13 +107,14 @@ static int add_link(t_lem *lem, char *room, char *room_link)
 **	Creating hash_table in (rooms) variable.
 */
 
-int	save_links(t_lem *lem, char *line)
+int				save_links(t_lem *lem, char *line)
 {
-	char **split_line;
+	char	**split_line;
 
 	if (!(split_line = ft_strsplit(line, '-')))
 		end_with_error(lem);
-	if (ft_strchr(split_line[0], ' ') || ft_strchr(split_line[1], ' ') || !lem->begin_room)
+	if (ft_strchr(split_line[0], ' ') || ft_strchr(split_line[1], ' ') ||
+		!lem->begin_room)
 		end_with_error(lem);
 	if (!lem->rooms)
 		create_hash_table(lem);

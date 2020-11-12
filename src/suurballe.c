@@ -6,13 +6,13 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 15:44:30 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:39:04 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/12 10:56:51 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void out_links(t_lem *lem, char *name)
+static void		out_links(t_lem *lem, char *name)
 {
 	int			room_hash;
 	t_room		*find_room;
@@ -41,11 +41,12 @@ static void out_links(t_lem *lem, char *name)
 	}
 }
 
-static void inverse_edges(t_lem *lem, t_path *room_first, t_path *room_second)
+static void		inverse_edges(t_lem *lem, t_path *room_first,
+					t_path *room_second)
 {
-	int room_hash;
-	t_room *find_room;
-	t_link *find_link;
+	int		room_hash;
+	t_room	*find_room;
+	t_link	*find_link;
 
 	room_hash = hash(lem->nb_rooms, room_first->name);
 	find_room = lem->rooms[room_hash];
@@ -65,30 +66,30 @@ static void inverse_edges(t_lem *lem, t_path *room_first, t_path *room_second)
 	find_link->on = 0;
 }
 
-void	s_algorithm(t_lem *lem)
+void			s_algorithm(t_lem *lem)
 {
-	t_way *way;
-	t_path *path;
+	t_way	*way;
+	t_path	*path;
 
 	way = lem->solutions->ways;
 	while (way)
 	{
 		path = way->path;
-		while (path->forward)
+		while (path->f)
 		{
-			inverse_edges(lem, path, path->forward);
-			path = path->forward;
+			inverse_edges(lem, path, path->f);
+			path = path->f;
 		}
 		way = way->next;
 	}
 	way = lem->solutions->ways;
 	while (way)
 	{
-		path = way->path->forward;
-		while (path->forward)
+		path = way->path->f;
+		while (path->f)
 		{
 			out_links(lem, path->name);
-			path = path->forward;
+			path = path->f;
 		}
 		way = way->next;
 	}

@@ -6,17 +6,17 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 10:45:23 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:36:08 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 14:00:50 by Gimad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void extend_ants(t_lem *lem, t_sol *sol, int max_len)
+static void		extend_ants(t_lem *lem, t_sol *sol, int max_len)
 {
-	int n;
-	int s;
-	t_way *tmp;
+	int		n;
+	int		s;
+	t_way	*tmp;
 
 	s = max_len - 1;
 	n = lem->nb_ants;
@@ -40,11 +40,11 @@ static void extend_ants(t_lem *lem, t_sol *sol, int max_len)
 	sol->steps = s;
 }
 
-static void count_steps(t_lem *lem, t_sol *sol)
+static void		count_steps(t_lem *lem, t_sol *sol)
 {
-	int max_len;
-	int valid_space;
-	t_way *tmp;
+	int		max_len;
+	int		valid_space;
+	t_way	*tmp;
 
 	valid_space = 0;
 	tmp = sol->ways;
@@ -73,7 +73,7 @@ static void count_steps(t_lem *lem, t_sol *sol)
 **	the previous one.
 */
 
-static int compare_solutions(t_lem *lem)
+static int		compare_solutions(t_lem *lem)
 {
 	t_sol *s_tmp;
 	t_way *w_tmp;
@@ -106,7 +106,7 @@ static int compare_solutions(t_lem *lem)
 **	intersections
 */
 
-int		finding_paths(t_lem *lem)
+int				finding_paths(t_lem *lem)
 {
 	while (compare_solutions(lem))
 	{

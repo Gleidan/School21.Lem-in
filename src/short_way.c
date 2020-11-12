@@ -6,18 +6,17 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 13:53:39 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:39:40 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/12 11:03:12 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "lem_in.h"
 
-static void	mark_link(t_lem *lem, char *room_first, char *room_second)
+static void			mark_link(t_lem *lem, char *room_first, char *room_second)
 {
-	int hash_key;
-	t_room *find_room;
-	t_link *find_link;
+	int			hash_key;
+	t_room		*find_room;
+	t_link		*find_link;
 
 	hash_key = hash(lem->nb_rooms, room_second);
 	find_room = lem->rooms[hash_key];
@@ -31,44 +30,45 @@ static void	mark_link(t_lem *lem, char *room_first, char *room_second)
 	find_link->in_way++;
 }
 
-static void new_path(t_lem *lem, t_way *current_way, t_path *tmp_path)
+static void			new_path(t_lem *lem, t_way *current_way, t_path *tmp_path)
 {
-	t_room *find_room;
-	t_path *back;
+	t_room		*find_room;
+	t_path		*back;
 
 	while (ft_strcmp(tmp_path->name, lem->start->name) != 0)
 	{
-		if (!(tmp_path->forward = (t_path*)malloc(sizeof(t_path))))
+		if (!(tmp_path->f = (t_path*)malloc(sizeof(t_path))))
 			end_with_error(lem);
-		tmp_path->forward->ant_name = 0;
+		tmp_path->f->ant_name = 0;
 		back = tmp_path;
-		tmp_path = tmp_path->forward;
-		tmp_path->backward = back;
+		tmp_path = tmp_path->f;
+		tmp_path->b = back;
 		find_room = lem->rooms[hash(lem->nb_rooms, back->name)];
 		while (ft_strcmp(back->name, find_room->name) != 0)
 			find_room = find_room->same_hash;
-		if (find_room->room_copy && check_copy(find_room, tmp_path->backward->backward->name))
+		if (find_room->room_copy && check_copy(find_room, tmp_path->b->b->name))
 			find_room = find_room->room_copy;
 		if (ft_strcmp(find_room->prev->name, find_room->name) == 0)
 			tmp_path->name = ft_strdup(find_room->prev->prev->name);
 		else
 			tmp_path->name = ft_strdup(find_room->prev->name);
-		mark_link(lem, tmp_path->name, tmp_path->backward->name);
-		tmp_path->forward = NULL;
+		mark_link(lem, tmp_path->name, tmp_path->b->name);
+		tmp_path->f = NULL;
 		current_way->len++;
 	}
-	current_way->path->backward = tmp_path;
+	current_way->path->b = tmp_path;
 }
 
-t_way *new_way(t_lem *lem)
+t_way				*new_way(t_lem *lem)
 {
 	t_way *tmp_way;
 
-	if (!(tmp_way = (t_way*)malloc(sizeof(t_way))) || !(tmp_way->path = (t_path*)malloc(sizeof(t_path))))
+	if (!(tmp_way = (t_way*)malloc(sizeof(t_way))) ||
+		!(tmp_way->path = (t_path*)malloc(sizeof(t_path))))
 		end_with_error(lem);
 	tmp_way->path->name = ft_strdup(lem->end->name);
-	tmp_way->path->backward = NULL;
-	tmp_way->path->forward = NULL;
+	tmp_way->path->b = NULL;
+	tmp_way->path->f = NULL;
 	tmp_way->next = NULL;
 	tmp_way->len = 0;
 	tmp_way->ants = 0;
@@ -77,7 +77,7 @@ t_way *new_way(t_lem *lem)
 	return (tmp_way);
 }
 
-static void	add_new_way(t_lem *lem, t_way *tmp_way)
+static void			add_new_way(t_lem *lem, t_way *tmp_way)
 {
 	new_path(lem, tmp_way, tmp_way->path);
 	clean_queue(lem);
@@ -88,12 +88,11 @@ static void	add_new_way(t_lem *lem, t_way *tmp_way)
 	in_way_recovery(lem->end->begin_link);
 }
 
-void	short_way(t_lem *lem)
+void				short_way(t_lem *lem)
 {
 	t_way		*way;
-	t_way		*tmp_way;
 	t_sol		*new_sol;
-	
+
 	if (!lem->solutions)
 	{
 		if (!(lem->solutions = (t_sol*)malloc(sizeof(t_sol))))
@@ -113,7 +112,7 @@ void	short_way(t_lem *lem)
 		new_sol->next = lem->solutions;
 		lem->solutions = new_sol;
 		lem->solutions->index = lem->solutions->next->index + 1;
-		tmp_way = new_way(lem);
-		add_new_way(lem, tmp_way);
+		way = new_way(lem);
+		add_new_way(lem, way);
 	}
 }

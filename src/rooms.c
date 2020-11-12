@@ -6,13 +6,13 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:52:30 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/11 10:37:54 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/11 20:15:39 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void init_room(t_room *room_lst, char **room)
+static void		init_room(t_room *room_lst, char **room)
 {
 	room_lst->name = ft_strdup(room[0]);
 	room_lst->begin_link = NULL;
@@ -33,7 +33,7 @@ static void init_room(t_room *room_lst, char **room)
 **	we also write to the (start) of (end).
 */
 
-static void	record_room(t_lem *lem, char **room, t_coord *point)
+static void		record_room(t_lem *lem, char **room, t_coord *point)
 {
 	t_room *room_lst;
 
@@ -57,10 +57,9 @@ static void	record_room(t_lem *lem, char **room, t_coord *point)
 	lem->end = (point->end) ? room_lst : lem->end;
 	point->start = 0;
 	point->end = 0;
-	
 }
 
-static int	check_repeats(t_room *begin_rooms, char **room)
+static int		check_repeats(t_room *begin_rooms, char **room)
 {
 	t_room *tmp;
 
@@ -74,7 +73,7 @@ static int	check_repeats(t_room *begin_rooms, char **room)
 	return (0);
 }
 
-static int	check_room(char **room)
+static int		check_room(char **room)
 {
 	int i;
 	int j;
@@ -102,9 +101,9 @@ static int	check_room(char **room)
 **	Checking the room for validity and repeats.
 */
 
-int			save_room(t_lem *lem, char *line, t_coord *point)
+int				save_room(t_lem *lem, char *line, t_coord *point)
 {
-	char **split_line;
+	char	**split_line;
 
 	if (lem->rooms)
 		end_with_error(lem);

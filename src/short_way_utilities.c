@@ -6,13 +6,13 @@
 /*   By: jconcent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/09 15:31:38 by jconcent          #+#    #+#             */
-/*   Updated: 2020/11/10 15:29:24 by jconcent         ###   ########.fr       */
+/*   Updated: 2020/11/12 10:57:58 by jconcent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void delete_copy(t_room *room)
+static void		delete_copy(t_room *room)
 {
 	t_link *del_link;
 	t_link *helper;
@@ -41,7 +41,7 @@ static void delete_copy(t_room *room)
 	}
 }
 
-void	graph_recovery(t_lem *lem, t_sol *prev_sol)
+void			graph_recovery(t_lem *lem, t_sol *prev_sol)
 {
 	int		hash_key;
 	t_way	*tmp_way;
@@ -59,13 +59,13 @@ void	graph_recovery(t_lem *lem, t_sol *prev_sol)
 			while (ft_strcmp(tmp_path->name, find_room->name) != 0)
 				find_room = find_room->same_hash;
 			delete_copy(find_room);
-			tmp_path = tmp_path->forward;
+			tmp_path = tmp_path->f;
 		}
 		tmp_way = tmp_way->next;
 	}
 }
 
-void	clean_queue(t_lem *lem)
+void			clean_queue(t_lem *lem)
 {
 	t_room *tmp;
 	t_room *next;
@@ -82,7 +82,7 @@ void	clean_queue(t_lem *lem)
 	}
 }
 
-int		check_copy(t_room *current_room, char *link_name)
+int				check_copy(t_room *current_room, char *link_name)
 {
 	t_link *tmp_link;
 
